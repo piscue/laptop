@@ -101,6 +101,7 @@ cask "spotify"
 cask "telegram"
 cask "utm"
 cask "zoom"
+cask "via"
 cask "whatsapp"
 EOF
 
