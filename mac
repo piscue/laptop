@@ -81,6 +81,7 @@ brew "unison"
 brew "vim"
 brew "tfswitch"
 brew "wget"
+brew "yabai"
 brew "yq"
 
 # casks
