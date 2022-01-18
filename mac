@@ -106,6 +106,6 @@ EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
-  # shellcheck disable=SC1090
+  # shellcheck disable=SC1090 disable=SC1091
   . "$HOME/.laptop.local"
 fi
