@@ -87,6 +87,8 @@ brew "tfswitch"
 brew "wget"
 brew "yabai"
 brew "yq"
+brew "zsh-syntax-highlighting"
+brew "zsh-autosuggestions"
 
 # casks
 cask "brave-browser"
