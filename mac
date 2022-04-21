@@ -87,6 +87,7 @@ brew "yabai"
 brew "yq"
 
 # casks
+cask "blackhole-2ch"
 cask "brave-browser"
 cask "cool-retro-term"
 cask "daisydisk"
