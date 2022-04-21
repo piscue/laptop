@@ -28,6 +28,7 @@ jobs:
           avoid_conflict /usr/local/bin/go
           avoid_conflict /usr/local/bin/gofmt
           avoid_conflict /usr/local/etc/bash_completion.d/docker-compose
+          avoid_conflict /usr/local/etc/bash_completion.d/git-completion.bash
 
       - name: Install shellcheck
         run: brew install shellcheck
