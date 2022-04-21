@@ -26,6 +26,11 @@ jobs:
           avoid_conflict /usr/local/bin/aws
           avoid_conflict /usr/local/bin/aws_completer
           avoid_conflict /usr/local/bin/git
+          avoid_conflict /usr/local/bin/git-cvsserver
+          avoid_conflict /usr/local/bin/git-receive-pack
+          avoid_conflict /usr/local/bin/git-shell
+          avoid_conflict /usr/local/bin/git-upload-archive
+          avoid_conflict /usr/local/bin/git-upload-pack
           avoid_conflict /usr/local/bin/go
           avoid_conflict /usr/local/bin/gofmt
           avoid_conflict /usr/local/etc/bash_completion.d/docker-compose
