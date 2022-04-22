@@ -32,7 +32,7 @@ fi
 
 echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle --file=- <<EOF
+brew bundle --force --file=- <<EOF
 
 tap "dteoh/sqa"
 tap "koekeishiya/formulae"
