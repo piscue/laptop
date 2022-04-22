@@ -32,8 +32,10 @@ fi
 
 # fix conflicts
 overwrites="
-aws
+awscli
+bash-completion
 git
+go
 "
 
 # shellcheck disable=SC2116
