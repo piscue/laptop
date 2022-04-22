@@ -31,7 +31,13 @@ if brew list | grep -Fq brew-cask; then
 fi
 
 # fix conflicts
-brew link --overwrite git
+overwrites="
+git
+"
+# shellcheck disable=SC2116
+for overwrite in $(echo "$overwrites"); do
+  brew install -f "$overwrite"
+done
 
 echo "Updating Homebrew formulae ..."
 brew update --force # https://github.com/Homebrew/brew/issues/1151
