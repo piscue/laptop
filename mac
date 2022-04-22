@@ -32,11 +32,13 @@ fi
 
 # fix conflicts
 overwrites="
+aws
 git
 "
+
 # shellcheck disable=SC2116
 for overwrite in $(echo "$overwrites"); do
-  brew install -f "$overwrite"
+  brew install --overwrite "$overwrite"
 done
 
 echo "Updating Homebrew formulae ..."
