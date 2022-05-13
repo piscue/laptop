@@ -137,6 +137,7 @@ cask "zoom"
 cask "vlc"
 cask "via"
 cask "whatsapp"
+cask "zenmate-vpn"
 EOF
 
 if [ -f "$HOME/.laptop.local" ]; then
