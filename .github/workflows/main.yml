@@ -17,14 +17,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Update brew
-        run: brew update
+        run: sudo brew update
 
       - name: Install shellcheck
-        run: brew install shellcheck
+        run: sudo brew install shellcheck
 
       - name: Run shellcheck
         run: shellcheck mac -e SC1091
 
       - name: sh mac
-        run: sh mac
+        run: sudo sh mac
 
