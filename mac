@@ -32,6 +32,7 @@ fi
 
 # fix conflicts
 overwrites="
+python@3.11
 awscli
 bash-completion
 git
