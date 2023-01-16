@@ -32,7 +32,6 @@ fi
 
 # fix conflicts
 overwrites="
-python@3.11
 awscli
 bash-completion
 git
@@ -83,7 +82,6 @@ brew "pipenv"
 brew "powerlevel10k"
 brew "pstree"
 brew "pyenv"
-brew "python@3.11"
 brew "qt@5"
 brew "ripgrep"
 brew "shellcheck"
