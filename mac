@@ -47,6 +47,7 @@ awscli
 bash-completion
 git
 go
+python@3.11
 "
 
 # shellcheck disable=SC2116
