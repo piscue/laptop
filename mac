@@ -30,7 +30,17 @@ if brew list | grep -Fq brew-cask; then
   brew uninstall --force brew-cask
 fi
 
+
 # fix conflicts
+removes="
+python@3.10
+"
+
+# shellcheck disable=SC2116
+for remove in $(echo "$removes"); do
+  brew uninstall "$remove"
+done
+
 overwrites="
 awscli
 bash-completion
