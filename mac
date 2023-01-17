@@ -34,6 +34,7 @@ fi
 # fix conflicts
 removes="
 azure-cli
+python@3.10
 "
 
 # shellcheck disable=SC2116
