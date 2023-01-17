@@ -43,11 +43,11 @@ for remove in $(echo "$removes"); do
 done
 
 overwrites="
+python@3.11
 awscli
 bash-completion
 git
 go
-python@3.11
 "
 
 # shellcheck disable=SC2116
