@@ -61,7 +61,6 @@ brew bundle -f --file=- <<EOF
 
 tap "dteoh/sqa"
 tap "hashicorp/homebrew-tap"
-tap "homebrew/cask-drivers"
 tap "koekeishiya/formulae"
 tap "romkatv/powerlevel10k"
 tap "warrensbox/homebrew-tap"
