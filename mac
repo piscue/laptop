@@ -66,6 +66,7 @@ tap "romkatv/powerlevel10k"
 tap "warrensbox/homebrew-tap"
 
 brew "ansiweather"
+brew "aws-vpn-client"
 brew "awscli"
 brew "bash"
 brew "bash-completion"
