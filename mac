@@ -34,6 +34,7 @@ fi
 # fix conflicts
 removes="
 azure-cli
+aws-sam-cli
 python@3.10
 "
 
