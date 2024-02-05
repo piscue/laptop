@@ -35,6 +35,7 @@ fi
 removes="
 azure-cli
 aws-sam-cli
+python@3.11
 "
 
 # shellcheck disable=SC2116
