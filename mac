@@ -164,7 +164,6 @@ cask "zoom"
 cask "via"
 cask "vincelwt-chatgpt"
 cask "vlc"
-cask "vpn-by-google-one"
 cask "whatsapp"
 EOF
 
