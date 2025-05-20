@@ -120,6 +120,7 @@ brew "zsh-autosuggestions"
 
 # casks
 cask "1password"
+cask "arc"
 cask "audio-hijack"
 cask "aws-vpn-client"
 cask "barrier"
