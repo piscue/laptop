@@ -159,7 +159,7 @@ cask "whatsapp"
 EOF
 
 # Amphetamine
-mas install 937984704
+mas purchase 937984704
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
