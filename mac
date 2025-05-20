@@ -86,6 +86,7 @@ brew "kubectl"
 brew "k9s"
 brew "kubie"
 brew "lynx"
+brew "mas"
 brew "midnight-commander"
 brew "neovim"
 brew "nmap"
@@ -123,8 +124,6 @@ cask "1password"
 cask "arc"
 cask "audio-hijack"
 cask "aws-vpn-client"
-cask "barrier"
-cask "brave-browser"
 cask "cyberghost-vpn"
 cask "daisydisk"
 cask "discord"
@@ -158,6 +157,14 @@ cask "vlc"
 cask "warp"
 cask "whatsapp"
 EOF
+
+if mas account >/dev/null 2>&1; then
+    echo "Signed in to App Store"
+    # Amphetamine
+    mas install 937984704
+else
+    echo "Not signed in to App Store"
+fi
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
