@@ -164,7 +164,6 @@ if mas account >/dev/null 2>&1; then
     mas install 937984704
 else
     echo "Not signed in to App Store"
-    exit 1
 fi
 
 if [ -f "$HOME/.laptop.local" ]; then
