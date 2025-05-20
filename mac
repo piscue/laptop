@@ -158,8 +158,14 @@ cask "warp"
 cask "whatsapp"
 EOF
 
-# Amphetamine
-mas purchase 937984704
+if mas account >/dev/null 2>&1; then
+    echo "Signed in to App Store"
+    # Amphetamine
+    mas install 937984704
+else
+    echo "Not signed in to App Store"
+    exit 1
+fi
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
