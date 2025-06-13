@@ -122,6 +122,7 @@ brew "zsh-autosuggestions"
 
 # casks
 cask "1password"
+cask "8bitdo-ultimate-software"
 cask "arc"
 cask "audio-hijack"
 cask "aws-vpn-client"
