@@ -137,7 +137,7 @@ cask "google-chrome"
 cask "google-drive"
 cask "grammarly-desktop"
 cask "granola"
-cask "hiddenbar
+cask "hiddenbar"
 cask "iterm2"
 cask "keepassxc"
 cask "keyboard-maestro"
