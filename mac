@@ -5,11 +5,15 @@ trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
 
 set -e
 
-HOMEBREW_PREFIX="/usr/local"
+if [ "$(uname -m)" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  HOMEBREW_PREFIX="/usr/local"
+fi
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
+    sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
   fi
 else
   sudo mkdir "$HOMEBREW_PREFIX"
@@ -20,38 +24,20 @@ fi
 if ! command -v brew >/dev/null; then
   echo "Installing Homebrew ..."
     /bin/bash -c \
-    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-    export PATH="/usr/local/bin:$PATH"
-fi
-
-if brew list | grep -Fq brew-cask; then
-  echo "Uninstalling old Homebrew-Cask ..."
-  brew uninstall --force brew-cask
+    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 
-# fix conflicts
-removes="
-azure-cli
-aws-sam-cli
-"
-
-# shellcheck disable=SC2116
-for remove in $(echo "$removes"); do
-  brew uninstall "$remove"
+# fix conflicts: only uninstall if currently installed
+for remove in azure-cli aws-sam-cli; do
+  if brew list --formula "$remove" >/dev/null 2>&1; then
+    brew uninstall "$remove"
+  fi
 done
 
-overwrites="
-python@3.11
-awscli
-bash-completion
-git
-go
-"
-
-# shellcheck disable=SC2116
-for overwrite in $(echo "$overwrites"); do
+for overwrite in python@3.13 awscli bash-completion git go; do
   brew install --overwrite "$overwrite"
 done
 
@@ -95,16 +81,17 @@ brew "mas"
 brew "midnight-commander"
 brew "neovim"
 brew "nmap"
-brew "node@18"
+brew "node@22"
 brew "ollama"
 brew "packer"
 brew "pgcli"
 brew "pipenv"
+brew "python@3.13"
 brew "pnpm"
 brew "romkatv/powerlevel10k/powerlevel10k"
 brew "pstree"
 brew "pyenv"
-brew "qt@5"
+brew "qt"
 brew "rclone"
 brew "ripgrep"
 brew "shellcheck"
@@ -180,6 +167,9 @@ if mas account >/dev/null 2>&1; then
 else
     echo "Not signed in to App Store"
 fi
+
+echo "Cleaning up old Homebrew versions ..."
+brew cleanup
 
 if [ -f "$HOME/.laptop.local" ]; then
   echo "Running your customizations from ~/.laptop.local ..."
