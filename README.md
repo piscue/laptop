@@ -1,7 +1,7 @@
 Laptop
 ======
 
-Laptop is a script to set up an macOS laptop
+Laptop is a script to set up a macOS laptop
 
 It can be run multiple times on the same machine safely.
 It installs, upgrades, or skips packages
@@ -13,7 +13,7 @@ Install
 Download the script:
 
 ```sh
-curl --remote-name https://raw.githubusercontent.com/piscue/laptop/master/mac
+curl --remote-name https://raw.githubusercontent.com/piscue/laptop/main/mac
 ```
 
 Review the script (avoid running scripts you haven't read!):
