@@ -43,3 +43,6 @@ jobs:
 
       - name: Run setup script (idempotency check)
         run: sh mac
+
+      - name: Run setup script (dry-run check)
+        run: sh mac --dry-run
