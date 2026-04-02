@@ -112,6 +112,3 @@ cask "vlc"
 cask "warp"
 cask "whatsapp"
 cask "zoom"
-
-# Mac App Store
-mas "Amphetamine", id: 937984704
