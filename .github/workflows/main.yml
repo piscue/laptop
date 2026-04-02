@@ -38,11 +38,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Run setup script (dry-run check)
+        run: sh mac --dry-run
+
       - name: Run setup script (first run)
         run: sh mac
 
       - name: Run setup script (idempotency check)
         run: sh mac
-
-      - name: Run setup script (dry-run check)
-        run: sh mac --dry-run
