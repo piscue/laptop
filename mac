@@ -1,9 +1,27 @@
 #!/bin/sh
 
-# shellcheck disable=SC2154
-trap 'ret=$?; test $ret -ne 0 && printf "failed\n\n" >&2; exit $ret' EXIT
+# shellcheck disable=SC2154,SC3040
+trap 'ret=$?; test $ret -ne 0 && printf "\n✘ Failed at step: %s (exit %d)\n" "${CURRENT_STEP:-unknown}" "$ret" >&2; exit $ret' EXIT
 
 set -e
+set -o pipefail
+
+CURRENT_STEP="initialization"
+
+# Parse arguments
+DRY_RUN=false
+for arg in "$@"; do
+  case "$arg" in
+    --dry-run) DRY_RUN=true ;;
+    --help)
+      printf "Usage: %s [OPTIONS]\n\n" "$0"
+      printf "Options:\n"
+      printf "  --dry-run    Show what would be installed without making changes\n"
+      printf "  --help       Show this help message\n"
+      exit 0
+      ;;
+  esac
+done
 
 if [ "$(uname -m)" = "arm64" ]; then
   HOMEBREW_PREFIX="/opt/homebrew"
@@ -11,6 +29,15 @@ else
   HOMEBREW_PREFIX="/usr/local"
 fi
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+BREWFILE="$SCRIPT_DIR/Brewfile"
+
+if [ ! -f "$BREWFILE" ]; then
+  printf "Error: Brewfile not found at %s\n" "$BREWFILE" >&2
+  exit 1
+fi
+
+CURRENT_STEP="setting up Homebrew prefix"
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
     sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
@@ -22,159 +49,66 @@ else
 fi
 
 if ! command -v brew >/dev/null; then
-  echo "Installing Homebrew ..."
-    /bin/bash -c \
+  printf "\n==> Installing Homebrew...\n"
+  /bin/bash -c \
     "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-    export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
-
-# fix conflicts: only uninstall if currently installed
+CURRENT_STEP="removing conflicting packages"
+printf "\n==> Removing conflicting packages...\n"
 for remove in azure-cli aws-sam-cli; do
   if brew list --formula "$remove" >/dev/null 2>&1; then
+    printf "  Removing %s...\n" "$remove"
     brew uninstall "$remove"
   fi
 done
 
+CURRENT_STEP="fixing package overwrites"
+printf "\n==> Fixing package link conflicts...\n"
 for overwrite in python@3.13 awscli bash-completion git go; do
   brew install --overwrite "$overwrite"
 done
 
-echo "Updating Homebrew formulae ..."
+CURRENT_STEP="updating Homebrew formulae"
+printf "\n==> Updating Homebrew formulae...\n"
 brew update --force # https://github.com/Homebrew/brew/issues/1151
-brew bundle -f --file=- <<EOF
 
-tap "dteoh/sqa"
-tap "hashicorp/homebrew-tap"
-tap "jackielii/tap"
-tap "koekeishiya/formulae"
-tap "romkatv/powerlevel10k"
-tap "warrensbox/homebrew-tap"
-
-brew "ansiweather"
-brew "awscli"
-brew "bash"
-brew "bash-completion"
-brew "bat"
-brew "claude-code-router"
-brew "colordiff"
-brew "container"
-brew "coreutils"
-brew "docker-compose"
-brew "fzf"
-brew "gh"
-brew "git"
-brew "git-remote-codecommit"
-brew "go"
-brew "googleworkspace-cli"
-brew "helm"
-brew "htop"
-brew "jq"
-brew "kind"
-brew "kubectl"
-brew "k9s"
-brew "kubie"
-brew "lynx"
-brew "mas"
-brew "midnight-commander"
-brew "neovim"
-brew "nmap"
-brew "node@22"
-brew "ollama"
-brew "opencode"
-brew "packer"
-brew "pgcli"
-brew "pipenv"
-brew "python@3.13"
-brew "pnpm"
-brew "romkatv/powerlevel10k/powerlevel10k"
-brew "pstree"
-brew "pyenv"
-brew "qt"
-brew "rclone"
-brew "ripgrep"
-brew "shellcheck"
-brew "telnet"
-brew "terraform-ls"
-brew "tflint"
-brew "warrensbox/tap/tfswitch"
-brew "thefuck"
-brew "tldr"
-brew "tmate"
-brew "tmux"
-brew "unison"
-brew "watch"
-brew "wget"
-brew "yq"
-brew "zsh-syntax-highlighting"
-brew "zsh-autosuggestions"
-
-# casks
-cask "1password"
-cask "antigravity"
-cask "arc"
-cask "audio-hijack"
-cask "claude"
-cask "claude-code"
-cask "cyberghost-vpn"
-cask "daisydisk"
-cask "descript"
-cask "discord"
-cask "duckduckgo"
-cask "figma"
-cask "firefox"
-cask "gcloud-cli"
-cask "github-copilot-for-xcode"
-cask "google-chrome"
-cask "google-drive"
-cask "grammarly-desktop"
-cask "granola"
-cask "hiddenbar"
-cask "iterm2"
-cask "keyboard-maestro"
-cask "lark"
-cask "lm-studio"
-cask "macwhisper"
-cask "nordvpn"
-cask "notion"
-cask "notion-calendar"
-cask "obs"
-cask "obsidian"
-cask "opal"
-cask "opencore-patcher"
-cask "opera-gx"
-cask "pocket-casts"
-cask "raycast"
-cask "slack"
-cask "spotify"
-cask "superhuman"
-cask "tailscale"
-cask "telegram"
-cask "zoom"
-cask "vlc"
-cask "warp"
-cask "whatsapp"
-EOF
-
-if mas account >/dev/null 2>&1; then
-    echo "Signed in to App Store"
-    # Amphetamine
-    mas install 937984704
-else
-    echo "Not signed in to App Store"
+if [ "$DRY_RUN" = true ]; then
+  printf "\n==> Dry run: checking what would be installed...\n"
+  brew bundle check --file="$BREWFILE" || true
+  printf "\n==> Dry run complete. No changes were made.\n"
+  exit 0
 fi
 
-echo "Cleaning up old Homebrew versions ..."
+CURRENT_STEP="installing packages from Brewfile"
+printf "\n==> Installing packages from Brewfile...\n"
+brew bundle -f --file="$BREWFILE"
+
+CURRENT_STEP="checking Mac App Store login"
+printf "\n==> Checking Mac App Store...\n"
+if mas account >/dev/null 2>&1; then
+  printf "  Signed in to App Store\n"
+  mas install 937984704 || printf "  Warning: Failed to install Amphetamine (may already be installed)\n"
+else
+  printf "  Not signed in to App Store — skipping App Store installs\n"
+fi
+
+CURRENT_STEP="cleaning up"
+printf "\n==> Cleaning up old Homebrew versions...\n"
 brew cleanup
 
+CURRENT_STEP="running customizations"
 if [ -f "$HOME/.laptop.local" ]; then
-  echo "Running your customizations from ~/.laptop.local ..."
+  printf "\n==> Running your customizations from ~/.laptop.local...\n"
   # shellcheck disable=SC1090 disable=SC1091
   . "$HOME/.laptop.local"
 fi
 
-# if powerlevel10k.zsh-theme don't exist in .zshrc then add it
-if ! grep -q "powerlevel10k.zsh-theme" "$HOME/.zshrc"; then
-  echo "source $(brew --prefix)/opt/powerlevel10k/powerlevel10k.zsh-theme" >>~/.zshrc
+CURRENT_STEP="configuring zsh theme"
+if ! grep -qF "powerlevel10k.zsh-theme" "$HOME/.zshrc" 2>/dev/null; then
+  printf "\n==> Adding powerlevel10k to ~/.zshrc...\n"
+  printf "source %s/opt/powerlevel10k/powerlevel10k.zsh-theme\n" "$(brew --prefix)" >>"$HOME/.zshrc"
 fi
+
+printf "\n✓ Setup complete!\n"
