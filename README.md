@@ -34,12 +34,6 @@ Execute the downloaded script:
 sh mac 2>&1 | tee ~/laptop.log
 ```
 
-Preview what would be installed without making changes:
-
-```sh
-sh mac --dry-run
-```
-
 Optionally, review the log:
 
 ```sh
@@ -80,13 +74,6 @@ ln -sf ~/dotfiles/.gitconfig ~/.gitconfig
 git config --global user.name "Your Name"
 git config --global user.email "you@example.com"
 ```
-
-## Options
-
-| Flag | Description |
-|------|-------------|
-| `--dry-run` | Show what would be installed without making changes |
-| `--help` | Show usage information |
 
 ## Troubleshooting
 
