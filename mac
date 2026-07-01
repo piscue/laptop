@@ -59,6 +59,18 @@ CURRENT_STEP="updating Homebrew formulae"
 printf "\n==> Updating Homebrew formulae...\n"
 brew update --force # https://github.com/Homebrew/brew/issues/1151
 
+CURRENT_STEP="trusting third-party taps"
+printf "\n==> Trusting third-party taps...\n"
+for tap in \
+  aws/tap \
+  dteoh/sqa \
+  hashicorp/tap \
+  jackielii/tap \
+  romkatv/powerlevel10k \
+  warrensbox/tap; do
+  brew trust --tap "$tap"
+done
+
 CURRENT_STEP="installing packages from Brewfile"
 printf "\n==> Installing packages from Brewfile...\n"
 brew bundle -f --file="$BREWFILE"
