@@ -5,8 +5,6 @@ tap "dteoh/sqa"
 tap "hashicorp/homebrew-tap"
 # https://github.com/jackielii/homebrew-tap
 tap "jackielii/tap"
-# https://github.com/romkatv/powerlevel10k - Zsh theme
-tap "romkatv/powerlevel10k"
 # https://github.com/warrensbox/homebrew-tap - tfswitch
 tap "warrensbox/homebrew-tap"
 
@@ -54,7 +52,6 @@ brew "python@3.13"
 brew "qt"
 brew "rclone"
 brew "ripgrep"
-brew "romkatv/powerlevel10k/powerlevel10k"
 brew "shellcheck"
 brew "supabase"
 brew "telnet"
