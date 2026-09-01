@@ -1,4 +1,6 @@
 # Taps
+# https://github.com/bjarneo/homebrew-cliamp - terminal music player
+tap "bjarneo/cliamp"
 # https://github.com/dteoh/homebrew-sqa - SQL query analyzer
 tap "dteoh/sqa"
 # https://github.com/hashicorp/homebrew-tap - Terraform tools
@@ -14,6 +16,7 @@ brew "bash"
 brew "bash-completion"
 brew "bat"
 brew "bats-core"
+brew "bjarneo/cliamp/cliamp"
 brew "claude-code-router"
 brew "colordiff"
 brew "coreutils"

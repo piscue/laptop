@@ -104,6 +104,7 @@ This project uses the following third-party Homebrew taps:
 
 | Tap | Purpose |
 |-----|---------|
+| `bjarneo/cliamp` | Terminal music player |
 | `dteoh/sqa` | SQL query analyzer |
 | `hashicorp/homebrew-tap` | Terraform and HashiCorp tools |
 | `jackielii/tap` | Community formulae |
