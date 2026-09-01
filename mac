@@ -63,6 +63,7 @@ CURRENT_STEP="trusting third-party taps"
 printf "\n==> Trusting third-party taps...\n"
 for tap in \
   aws/tap \
+  bjarneo/cliamp \
   dteoh/sqa \
   hashicorp/tap \
   jackielii/tap \
