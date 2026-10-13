@@ -1,8 +1,6 @@
 # Taps
 # https://github.com/bjarneo/homebrew-cliamp - terminal music player
 tap "bjarneo/cliamp"
-# https://github.com/dteoh/homebrew-sqa - SQL query analyzer
-tap "dteoh/sqa"
 # https://github.com/hashicorp/homebrew-tap - Terraform tools
 tap "hashicorp/homebrew-tap"
 # https://github.com/jackielii/homebrew-tap
@@ -27,6 +25,7 @@ brew "fzf"
 brew "gemini-cli"
 brew "gh"
 brew "git"
+brew "git-filter-repo"
 brew "git-remote-codecommit"
 brew "glab"
 brew "go"

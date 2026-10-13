@@ -64,7 +64,6 @@ printf "\n==> Trusting third-party taps...\n"
 for tap in \
   aws/tap \
   bjarneo/cliamp \
-  dteoh/sqa \
   hashicorp/tap \
   jackielii/tap \
   romkatv/powerlevel10k \
