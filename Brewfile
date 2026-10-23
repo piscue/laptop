@@ -73,7 +73,6 @@ brew "zsh-syntax-highlighting"
 # Casks
 cask "1password"
 cask "antigravity"
-cask "arc"
 cask "audio-hijack"
 cask "blackhole-2ch"
 cask "canva"
