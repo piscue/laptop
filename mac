@@ -42,7 +42,9 @@ fi
 
 CURRENT_STEP="removing conflicting packages"
 printf "\n==> Removing conflicting packages...\n"
-for remove in azure-cli aws-sam-cli; do
+# tldr: removed from homebrew-core, replaced by tlrc (which installs the same tldr binary).
+# vercel: moved from formula to cask; the stale formula blocks the cask from linking.
+for remove in azure-cli aws-sam-cli tldr vercel; do
   if brew list --formula "$remove" >/dev/null 2>&1; then
     printf "  Removing %s...\n" "$remove"
     brew uninstall "$remove"
